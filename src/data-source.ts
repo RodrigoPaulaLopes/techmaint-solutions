@@ -2,6 +2,7 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "./users/entities/user.entity"
 import { CreateUserTable1734484740789 } from "./migration/1734484740789-CreateUserTable"
+import { AddResetPasswordFieldsToUserTable1734494391951 } from "./migration/1734494391951-AddResetPasswordFieldsToUserTable"
 
 
 export const AppDataSource = new DataSource({
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: true,
     entities: [User],
-    migrations: [CreateUserTable1734484740789],
+    migrations: [CreateUserTable1734484740789, AddResetPasswordFieldsToUserTable1734494391951],
 
 
 })

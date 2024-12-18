@@ -14,7 +14,7 @@ import { EmailModule } from './email/email.module';
     database: "techmaint_solutions",
     entities: [User],
     synchronize: false
-  }), AuthenticationModule, EmailModule],
+  }), AuthenticationModule],
   controllers: [],
   providers: [],
 })

@@ -2,6 +2,8 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegisterDto } from './dto/register.dto';
 import { Validate } from 'class-validator';
+import { SendCodeDto } from './dto/send_code.dto';
+import { ResetPasswordDto } from './dto/reset_password.dto';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -18,5 +20,16 @@ export class AuthenticationController {
   public login(@Body() register: RegisterDto) {
 
     return this.authenticationService.login(register)
+  }
+
+  @Post("send_code")
+  public send_code_to_change_password(@Body() register: SendCodeDto) {
+
+    return this.authenticationService.send_code_to_change_password(register)
+  }
+  @Post("reset_password")
+  public reset_password(@Body() register: ResetPasswordDto) {
+
+    return this.authenticationService.reset_password(register)
   }
 }

@@ -31,7 +31,12 @@ export class User {
     })
     permissions: Permissions[]
 
+    @Column({ nullable: true })
+    reset_password_code: string;
 
+    @Column({ nullable: true, type: 'timestamp' })
+    reset_password_expires: Date;
+    
     @CreateDateColumn({
         type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP',
