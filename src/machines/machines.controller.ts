@@ -12,9 +12,7 @@ export class MachinesController {
   constructor(private readonly machinesService: MachinesService) { }
 
   @Get()
-  async findAll(@UserParam() user: ShowUserDto) {
-    console.log(user);
-    
+  async findAll() {    
     return this.machinesService.findAll();
   }
 
