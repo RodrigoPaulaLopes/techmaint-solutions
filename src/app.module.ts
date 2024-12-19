@@ -5,6 +5,7 @@ import { User } from './users/entities/user.entity';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { EmailModule } from './email/email.module';
 import { MachinesModule } from './machines/machines.module';
+import { Machine } from './machines/entities/machine.entity';
 @Module({
   imports: [UsersModule, TypeOrmModule.forRoot({
     type: 'postgres',
@@ -13,7 +14,7 @@ import { MachinesModule } from './machines/machines.module';
     username: "admin",
     password: "Admin@1234!",
     database: "techmaint_solutions",
-    entities: [User],
+    entities: [User, Machine],
     synchronize: false
   }), AuthenticationModule, MachinesModule],
   controllers: [],

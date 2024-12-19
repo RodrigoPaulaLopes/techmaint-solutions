@@ -4,6 +4,7 @@ import { User } from "./users/entities/user.entity"
 import { CreateUserTable1734484740789 } from "./migration/1734484740789-CreateUserTable"
 import { AddResetPasswordFieldsToUserTable1734494391951 } from "./migration/1734494391951-AddResetPasswordFieldsToUserTable"
 import { CreateMachinesTable1734580324911 } from "./migration/1734580324911-createMachinesTable"
+import { Machine } from "./machines/entities/machine.entity"
 
 
 export const AppDataSource = new DataSource({
@@ -15,7 +16,7 @@ export const AppDataSource = new DataSource({
     database: "techmaint_solutions",
     synchronize: true,
     logging: true,
-    entities: [User],
+    entities: [User, Machine],
     migrations: [CreateUserTable1734484740789, AddResetPasswordFieldsToUserTable1734494391951, CreateMachinesTable1734580324911],
 
 
