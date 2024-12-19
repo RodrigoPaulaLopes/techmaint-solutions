@@ -1,11 +1,15 @@
 import { CanActivate, ExecutionContext, HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { UsersService } from '../../users/users.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
 
-  constructor(private readonly jwtService: JwtService) { }
+  constructor(private readonly jwtService: JwtService,  private readonly userService: UsersService) { }
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -21,7 +25,11 @@ export class TokenGuard implements CanActivate {
 
       const data = this.jwtService.verify(token)
 
-      request.tokenPayload = data
+      const user = this.userService.findOne(data.sub)
+
+      if(!user) throw new HttpException("Token invalid", 401)
+
+      request.user = user
       return true;
             
     } catch (error) {
