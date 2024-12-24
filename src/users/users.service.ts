@@ -17,8 +17,28 @@ export class UsersService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(page: number = 1, limit: number = 10) {
+
+    if (page < 1) {
+      page = 1; 
+    }
+  
+    const skip = (page - 1) * limit; 
+    const take = limit;
+  
+    const [data, total] = await this.userRepository.findAndCount({
+      skip,
+      take,
+    });
+  
+    const totalPages = Math.ceil(total / limit);
+  
+    return {
+      data,
+      total,
+      currentPage: page,
+      totalPages,
+    };
   }
 
   async findOne(id: string) {
@@ -26,16 +46,16 @@ export class UsersService {
 
     if (!user) throw new HttpException("user not found", 404)
     const show_user: ShowUserDto = {
-      id: user.id, name: user.name, email: user.email
+      id: user.id, name: user.name, email: user.email, user_type: user.user_type
     }
     return show_user
   }
 
   async isAdmin(id: string) {
 
-    const user = await  this.userRepository.findOneBy({id: id})
+    const user = await this.userRepository.findOneBy({ id: id })
 
-    if(!user) throw new HttpException("User not found", 404)
+    if (!user) throw new HttpException("User not found", 404)
 
     const isAdmin = user.user_type === UserType.ADMIN ? true : false
 
