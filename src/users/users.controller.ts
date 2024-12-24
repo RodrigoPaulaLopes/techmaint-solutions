@@ -19,9 +19,9 @@ export class UsersController {
   }
   @UseGuards(AdminGuard)
   @Get()
-  findAll(@Query('page') page: number, @Query('limit') limit: number) {
+  findAll(@Query('page') page: number, @Query('limit') limit: number, @Query('order') order: "ASC" | 'DESC', @Query('search') search: string) {
 
-    return this.usersService.findAll(page, limit);
+    return this.usersService.findAll(page, limit, order, search);
   }
 
   @Get(':id')

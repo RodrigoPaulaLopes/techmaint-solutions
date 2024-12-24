@@ -11,7 +11,7 @@ describe('UsersService', () => {
   let service: UsersService;
   let userRepository: Repository<User>
   const users = {
-    "currentPage": 0,
+    "currentPage": 1,
     "data": [{
       "email": "rodrigoplopes25@gmail.com",
       "id": "f78dced8-8d53-4e22-b7d4-cf2bc5fd8f0d",
@@ -51,7 +51,7 @@ describe('UsersService', () => {
 
 
     it('whould return all users', async () => {
-      const result = await service.findAll(0, 10)
+      const result = await service.findAll(1, 10)
 
       expect(result).toEqual(users)
     })

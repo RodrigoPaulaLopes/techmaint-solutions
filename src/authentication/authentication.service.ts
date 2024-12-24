@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EmailService } from '../email/email.service';
 import { SendCodeDto } from './dto/send_code.dto';
 import { ResetPasswordDto } from './dto/reset_password.dto';
+import { LoginDto } from './dto/login.dto';
 @Injectable()
 export class AuthenticationService {
 
@@ -39,7 +40,7 @@ export class AuthenticationService {
   /**
    * name
    */
-  public async login({ email, password }: RegisterDto) {
+  public async login({ email, password }: LoginDto) {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new HttpException("Credentials not valid", 400)
 

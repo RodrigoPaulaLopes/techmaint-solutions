@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Validate } from 'class-validator';
 import { SendCodeDto } from './dto/send_code.dto';
 import { ResetPasswordDto } from './dto/reset_password.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -17,7 +18,7 @@ export class AuthenticationController {
   }
 
   @Post("signin")
-  public login(@Body() register: RegisterDto) {
+  public login(@Body() register: LoginDto) {
 
     return this.authenticationService.login(register)
   }
