@@ -8,6 +8,7 @@ import { Machine } from '../machines/entities/machine.entity';
 import { User } from '../users/entities/user.entity';
 import { MaintenanceStatus } from './enums/maintenance-status.enum';
 import { EmailService } from '../email/email.service';
+import { maintenanceTemplate } from '../email/views/maintenance.template';
 
 @Injectable()
 export class MaintenanceService {
@@ -74,38 +75,8 @@ export class MaintenanceService {
     const new_data = await this.maintenanceRepository.save(new_maintenance)
 
     if (new_data) {
-      const template = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Maintenance Scheduled</title>
-            </head>
-            <body>
-                <h2>Maintenance Scheduled - [Machine/Equipment Name]</h2>
-                <p>Hello <strong>[Technician's Name]</strong>,</p>
-                <p>We would like to inform you that a new maintenance has been scheduled for the equipment <strong>[Machine/Equipment Name]</strong>.</p>
-
-                <h3>Maintenance Details:</h3>
-                <ul>
-                    <li><strong>Maintenance Date:</strong> [Maintenance Date and Time]</li>
-                    <li><strong>Description:</strong> [Maintenance Description]</li>
-                    <li><strong>Maintenance Type:</strong> [Maintenance Type]</li>
-                    <li><strong>Status:</strong> [Maintenance Status]</li>
-                </ul>
-
-                <p>Please make sure to be available on the scheduled date and time to carry out the necessary tasks.</p>
-
-                <p>If there are any issues or if you need further information, please don't hesitate to contact us.</p>
-
-                <p>Best regards,<br>
-                [Your Name or Company Name]<br>
-                [Contact Information]</p>
-            </body>
-            </html>
-      `
-      this.emailService.sendEmail(technicians, "Maintenance Scheduled - [Machine/Equipment Name]", template)
+      const template = maintenanceTemplate(new_data)
+      this.emailService.sendEmail(technicians, `Maintenance Scheduled - ${new_data.machine.name}`, template)
     }
     return new_data
   }
