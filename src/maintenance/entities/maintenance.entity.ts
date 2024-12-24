@@ -6,38 +6,42 @@ import {
     UpdateDateColumn,
     ManyToMany,
     JoinTable,
-    OneToMany,
+    ManyToOne,
+    JoinColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { MaintenanceType } from '../enums/maintenance-type.enum';
 import { Machine } from '../../machines/entities/machine.entity';
+import { MaintenanceStatus } from '../enums/maintenance-status.enum';
 
 @Entity('maintenances')
 export class Maintenance {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id?: string;
 
     @Column({ type: 'varchar', length: 255 })
     description: string;
 
     @Column({ type: 'timestamp', nullable: true })
-    scheduledDate: Date;
+    date_maintenance: Date;
 
-    @Column()
-    type: MaintenanceType
+    @Column({ type: 'varchar', length: 50 })
+    type: MaintenanceType;
 
-    @Column()
-    status: MaintenanceType;
+    @Column({ type: 'varchar', length: 50 })
+    status: MaintenanceStatus;
 
-    @CreateDateColumn()
-    createdAt: Date;
+    @CreateDateColumn({name: 'created_at'})
+    createdAt?: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @UpdateDateColumn({name: 'updated_at'})
+    updatedAt?: Date;
 
-    @OneToMany(() => Machine, machine => machine.maintenances)
-    machine: Machine
-    
+
+    @ManyToOne(() => Machine, (machine) => machine.maintenances, { nullable: false, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'machine_id' })
+    machine: Machine;
+
     @ManyToMany(() => User, (technician) => technician.maintenances, {
         cascade: true,
     })

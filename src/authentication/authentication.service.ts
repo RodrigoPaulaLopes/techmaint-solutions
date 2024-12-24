@@ -66,9 +66,10 @@ export class AuthenticationService {
 
     user.reset_password_code = resetCode;
     user.reset_password_expires = expirationTime;
-    await this.userRepository.save(user);
-
-    return this.emailService.sendEmail(email, "Password Reset Code", `<strong>Your password reset code is ${resetCode}. It expires in 15 minutes.</strong>`)
+    const new_user = await this.userRepository.save(user);
+    const data = []
+    data.push(new_user)
+    return this.emailService.sendEmail(data, "Password Reset Code", `<strong>Your password reset code is ${resetCode}. It expires in 15 minutes.</strong>`)
   }
 
   /**

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Attachment, EmailParams, EmailSettings, MailerSend, Recipient, Sender } from 'mailersend';
 import { Personalization } from 'mailersend/lib/modules/Email.module';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class EmailService {
@@ -14,12 +15,10 @@ export class EmailService {
     });
   }
 
-  async sendEmail(to: string, subject: string,  html?: string, text?: string) {
+  async sendEmail(to: User[], subject: string,  html?: string, text?: string) {
     const sentFrom = new Sender("rodrigo@trial-3z0vklo98m1l7qrx.mlsender.net", "TechMaint Solutions");
 
-    const recipients = [
-      new Recipient(to, "rodrigo lopes")
-    ];
+    const recipients = to.map(user => new Recipient(user.email, user.name))
 
 
     const emailParams = new EmailParams()
