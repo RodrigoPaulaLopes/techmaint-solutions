@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { UserType } from "../enums/user-type.enum";
 import { Permissions } from "../enums/permissions.enum";
+import { Maintenance } from "../../maintenance/entities/maintenance.entity";
 
 @Entity("users")
 export class User {
@@ -36,6 +37,9 @@ export class User {
 
     @Column({ nullable: true, type: 'timestamp' })
     reset_password_expires: Date;
+
+    @ManyToMany(() => Maintenance, (maintenance) => maintenance.technicians)
+    maintenances: Maintenance[];
     
     @CreateDateColumn({
         type: 'timestamp',

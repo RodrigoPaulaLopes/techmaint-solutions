@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Maintenance } from "../../maintenance/entities/maintenance.entity";
 
 @Entity('machines')
 export class Machine {
@@ -14,6 +15,9 @@ export class Machine {
     @Column()
     description?: string;
 
+    @OneToMany(() => Maintenance, (maintenance) => maintenance.machine)
+    maintenances: Maintenance[];
+    
     @CreateDateColumn()
     created_at: Date;
 
