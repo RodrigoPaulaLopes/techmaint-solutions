@@ -5,16 +5,18 @@ import { UpdateMachineDto } from './dto/update-machine.dto';
 import { TokenGuard } from '../guards/token/token.guard';
 import { UserParam } from '../decorators/user/user.decorator';
 import { ShowUserDto } from '../users/dto/show-user.dto';
+import { AdminGuard } from '../guards/admin/admin.guard';
 
 @UseGuards(TokenGuard)
 @Controller('machines')
 export class MachinesController {
   constructor(private readonly machinesService: MachinesService) { }
-
+  @UseGuards(AdminGuard)
   @Get()
   async findAll() {    
     return this.machinesService.findAll();
   }
+
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
