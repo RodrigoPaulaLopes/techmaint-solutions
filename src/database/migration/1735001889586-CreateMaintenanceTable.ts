@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
-import { MaintenanceType } from "../maintenance/enums/maintenance-type.enum";
-import { MaintenanceStatus } from "../maintenance/enums/maintenance-status.enum";
+import { MaintenanceType } from "../../maintenance/enums/maintenance-type.enum";
+import { MaintenanceStatus } from "../../maintenance/enums/maintenance-status.enum";
 
 export class CreateMaintenanceTable1735001889586 implements MigrationInterface {
 

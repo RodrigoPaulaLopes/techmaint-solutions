@@ -8,6 +8,7 @@ import { MachinesModule } from './machines/machines.module';
 import { Machine } from './machines/entities/machine.entity';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { Maintenance } from './maintenance/entities/maintenance.entity';
+import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [UsersModule, TypeOrmModule.forRoot({
     type: 'postgres',
@@ -18,7 +19,7 @@ import { Maintenance } from './maintenance/entities/maintenance.entity';
     database: "techmaint_solutions",
     entities: [User, Machine, Maintenance],
     synchronize: false
-  }), AuthenticationModule, MachinesModule, MaintenanceModule],
+  }), AuthenticationModule, MachinesModule, MaintenanceModule, ProfileModule],
   controllers: [],
   providers: [],
 })
