@@ -4,6 +4,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { UserParam } from '../decorators/user/user.decorator';
 import { User } from '../users/entities/user.entity';
 import { TokenGuard } from '../guards/token/token.guard';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @UseGuards(TokenGuard)
 @Controller('profile')
@@ -11,9 +12,14 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService) { }
 
 
-
   @Put()
-  name(@Body() change_pass: ChangePasswordDto, @UserParam() user: User) {
+  update(@Body() update: UpdateProfileDto, @UserParam() user: User) {
+    
+    
+    return this.profileService.update(update, user.id)
+  }
+  @Put('change_password')
+  change_password(@Body() change_pass: ChangePasswordDto, @UserParam() user: User) {
 
     
     return this.profileService.change_passowrd(change_pass, user.id)
