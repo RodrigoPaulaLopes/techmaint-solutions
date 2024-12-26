@@ -187,21 +187,27 @@ export class MaintenanceService {
 
 
   async remove(id: string) {
-    const maintenance = await this.maintenanceRepository.findOneBy({ id });
+    const maintenance = await this.maintenanceRepository.findOne({
+      where: { id: id },
+      relations: ['technicians', 'machine'],
+    });
+  
     if (!maintenance) {
       throw new NotFoundException(`Maintenance with ID ${id} not found.`);
     }
+  
+    maintenance.status = MaintenanceStatus.CANCELED;
 
-    maintenance.status = MaintenanceStatus.CANCELED
-
-    await this.maintenanceRepository.update(id, maintenance);
-    const template = canceledMaintenanceTemplate(maintenance)
-
+    await this.maintenanceRepository.save(maintenance);
+  
+    const template = canceledMaintenanceTemplate(maintenance);
+  
     this.emailService.sendEmail(
       maintenance.technicians,
       `Maintenance Canceled - ${maintenance.machine.name}`,
       template
     );
+  
     return { message: `Maintenance with ID ${id} has been successfully canceled.` };
   }
 }
