@@ -16,7 +16,7 @@ import { UpdateMaintenanceStatusEnum1735176764398 } from "./migration/1735176764
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: "postgres-db",
     port: 5432,
     username: "admin",
     password: "Admin@1234!",

@@ -11,12 +11,12 @@ export class EmailService {
   constructor() {
 
     this.mailerClient = new MailerSend({
-      apiKey: 'mlsn.1264d4539bac900b7a738dcf092c80f7b9e0d5ac14bf11592ff0b27dd5b7d96c',
+      apiKey: process.env.API_KEY,
     });
   }
 
   async sendEmail(to: User[], subject: string,  html?: string, text?: string) {
-    const sentFrom = new Sender("rodrigo@trial-3z0vklo98m1l7qrx.mlsender.net", "TechMaint Solutions");
+    const sentFrom = new Sender(process.env.SENDER, process.env.SENDER_TITLE);
 
     const recipients = to.map(user => new Recipient(user.email, user.name))
 
