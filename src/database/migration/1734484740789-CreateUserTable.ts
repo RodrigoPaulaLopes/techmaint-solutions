@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-import { UserType } from "../users/enums/user-type.enum";
-import { Permissions } from "../users/enums/permissions.enum";
+import { UserType } from "../../users/enums/user-type.enum";
+import { Permissions } from "../../users/enums/permissions.enum";
 
 export class CreateUserTable1734484740789 implements MigrationInterface {
 

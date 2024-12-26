@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EmailService } from '../email/email.service';
 import { SendCodeDto } from './dto/send_code.dto';
 import { ResetPasswordDto } from './dto/reset_password.dto';
+import { LoginDto } from './dto/login.dto';
 @Injectable()
 export class AuthenticationService {
 
@@ -19,7 +20,7 @@ export class AuthenticationService {
 
   }
 
-  public async register({ email, password }: RegisterDto) {
+  public async register({ email, password, name }: RegisterDto) {
     const user = await this.userRepository.findOne({ where: { email } });
 
     if (user) throw new HttpException("User already exists, try another credentials.", 400);
@@ -28,6 +29,7 @@ export class AuthenticationService {
 
     const new_user = this.userRepository.create({
       email,
+      name,
       password: new_pass,
       user_type: UserType.ADMIN,
       permissions: [Permissions.VIEW_EQUIPMENT, Permissions.EDIT_SCHEDULES],
@@ -38,7 +40,7 @@ export class AuthenticationService {
   /**
    * name
    */
-  public async login({ email, password }: RegisterDto) {
+  public async login({ email, password }: LoginDto) {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new HttpException("Credentials not valid", 400)
 
@@ -66,9 +68,10 @@ export class AuthenticationService {
 
     user.reset_password_code = resetCode;
     user.reset_password_expires = expirationTime;
-    await this.userRepository.save(user);
-
-    return this.emailService.sendEmail(email, "Password Reset Code", `<strong>Your password reset code is ${resetCode}. It expires in 15 minutes.</strong>`)
+    const new_user = await this.userRepository.save(user);
+    const data = []
+    data.push(new_user)
+    return this.emailService.sendEmail(data, "Password Reset Code", `<strong>Your password reset code is ${resetCode}. It expires in 15 minutes.</strong>`)
   }
 
   /**
