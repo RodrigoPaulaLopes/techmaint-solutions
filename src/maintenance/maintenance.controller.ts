@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { MaintenanceService } from './maintenance.service';
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto';
 import { UpdateMaintenanceDto } from './dto/update-maintenance.dto';
@@ -13,22 +13,22 @@ export class MaintenanceController {
   }
 
   @Get()
-  findAll() {
-    return this.maintenanceService.findAll();
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('order') order: 'ASC' | 'DESC') {
+    return this.maintenanceService.findAll(page, limit);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.maintenanceService.findOne(+id);
+    return this.maintenanceService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMaintenanceDto: UpdateMaintenanceDto) {
-    return this.maintenanceService.update(+id, updateMaintenanceDto);
+    return this.maintenanceService.update(id, updateMaintenanceDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.maintenanceService.remove(+id);
+    return this.maintenanceService.remove(id);
   }
 }

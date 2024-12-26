@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
@@ -12,6 +12,14 @@ export class ProfileService {
 
     constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
+
+    async show(id: string) {
+        const user = await this.userRepository.findOneBy({id: id})
+
+        if(!user) throw new NotFoundException("Profile does not exists")
+
+        return user
+    }
 
     async update({ email, name }: UpdateProfileDto, id: string) {
 

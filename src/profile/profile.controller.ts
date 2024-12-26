@@ -1,4 +1,4 @@
-import { Body, Controller, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { UserParam } from '../decorators/user/user.decorator';
@@ -11,7 +11,10 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) { }
 
-
+  @Get()
+  show(@UserParam() user: User){
+    return this.profileService.show(user.id)
+  }
   @Put()
   update(@Body() update: UpdateProfileDto, @UserParam() user: User) {
     

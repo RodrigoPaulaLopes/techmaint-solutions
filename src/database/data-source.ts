@@ -10,6 +10,8 @@ import { CreateTechnicianMaintenanceTable1735003468086 } from "./migration/17350
 import { CreateForeignKeyMachineIdOnMaintenanceTable1735003632729 } from "./migration/1735003632729-CreateForeignKeyMachineIdOnMaintenanceTable"
 import { CreateForeignKeyTechnicianIdAndMaintenanceId1735003794861 } from "./migration/1735003794861-CreateForeignKeyTechnicianIdAndMaintenanceId"
 import { Maintenance } from "../maintenance/entities/maintenance.entity"
+import { AddInitDateAndEndDateToMaintenanceTable1735174250887 } from "./migration/1735174250887-AddInitDateAndEndDateToMaintenanceTable"
+import { UpdateMaintenanceStatusEnum1735176764398 } from "./migration/1735176764398-UpdateMaintenanceStatusEnum"
 
 
 export const AppDataSource = new DataSource({
@@ -29,7 +31,9 @@ export const AppDataSource = new DataSource({
         CreateMaintenanceTable1735001889586, 
         CreateTechnicianMaintenanceTable1735003468086,
         CreateForeignKeyMachineIdOnMaintenanceTable1735003632729,
-        CreateForeignKeyTechnicianIdAndMaintenanceId1735003794861
+        CreateForeignKeyTechnicianIdAndMaintenanceId1735003794861,
+        AddInitDateAndEndDateToMaintenanceTable1735174250887, 
+        UpdateMaintenanceStatusEnum1735176764398
     ],
 
 

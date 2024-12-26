@@ -28,6 +28,12 @@ export class Maintenance {
     @Column({ type: 'varchar', length: 50 })
     type: MaintenanceType;
 
+    @Column({nullable: true})
+    init_date?: Date
+
+    @Column({nullable: true})
+    end_date?: Date
+
     @Column({ type: 'varchar', length: 50 })
     status: MaintenanceStatus;
 
